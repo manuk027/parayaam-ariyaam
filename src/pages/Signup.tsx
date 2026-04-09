@@ -16,7 +16,7 @@ function Signup() {
             await updateProfile(userCredential.user, {
                 displayName: fullName,
             });
-            navigate("/blogs");
+            navigate("/blogs", { replace: true });
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
@@ -27,7 +27,7 @@ function Signup() {
         try {
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider);
-            navigate("/blogs");
+            navigate("/blogs", { replace: true });
         } catch (error: any) {
             console.error(error.message);
         }

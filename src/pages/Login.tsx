@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
 
 function Login() {
@@ -11,7 +11,7 @@ function Login() {
     async function loginWithEmail() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            navigate("/blogs");
+            navigate("/blogs", { replace: true });
         } catch (error: any) {
             console.error(error.message);
         }
@@ -20,7 +20,7 @@ function Login() {
         try {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
-            navigate("/blogs");
+            navigate("/blogs", { replace: true });
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
