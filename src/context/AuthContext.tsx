@@ -4,6 +4,7 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 
 type AuthContextType = {
     user: User | null;
+    loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,7 +31,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user }}>
+        <AuthContext.Provider value={{ user, loading }}>
             {!loading && children}
         </AuthContext.Provider>
     );
