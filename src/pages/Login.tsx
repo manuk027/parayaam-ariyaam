@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
 
 function Login() {
@@ -8,7 +8,8 @@ function Login() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    async function loginWithEmail() {
+    async function loginWithEmail(e: React.FormEvent) {
+        e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
             navigate("/blogs", { replace: true });
@@ -16,7 +17,8 @@ function Login() {
             console.error(error.message);
         }
     }
-    async function loginWithGoogle() {
+    async function loginWithGoogle(e: React.FormEvent) {
+        e.preventDefault();
         try {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
