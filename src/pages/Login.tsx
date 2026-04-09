@@ -1,7 +1,32 @@
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase/config";
 
 function Login() {
     const navigate = useNavigate();
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    async function loginWithEmail() {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            navigate("/blogs");
+        } catch (error: any) {
+            console.error(error.message);
+        }
+    }
+    async function loginWithGoogle() {
+        try {
+            const provider = new GoogleAuthProvider();
+            await signInWithPopup(auth, provider);
+            navigate("/blogs");
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            }
+        }
+    }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
@@ -13,6 +38,7 @@ function Login() {
                 </h2>
                 <form className="space-y-4">
                     <input
+                        onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         name="email"
                         placeholder="Email"
@@ -20,6 +46,7 @@ function Login() {
                         required
                     />
                     <input
+                        onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         name="password"
                         placeholder="Password"
@@ -27,6 +54,7 @@ function Login() {
                         required
                     />
                     <button
+                        onClick={loginWithEmail}
                         type="submit"
                         className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition"
                     >
@@ -34,13 +62,12 @@ function Login() {
                     </button>
                 </form>
 
-                {/* Divider */}
                 <div className="flex items-center my-6">
                     <div className="flex-1 h-px bg-gray-300" />
                     <span className="px-3 text-gray-500 text-sm">OR</span>
                     <div className="flex-1 h-px bg-gray-300" />
                 </div>
-                <button
+                <button onClick={loginWithGoogle}
                     className="w-full border p-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition"
                 >
                     <img
