@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
@@ -21,6 +21,15 @@ function Signup() {
             if (error instanceof Error) {
                 console.error(error.message);
             }
+        }
+    }
+    function signupWithGoogle() {
+        try {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider);
+            navigate("/blogs");
+        } catch (error: any) {
+            console.error(error.message);
         }
     }
 
@@ -50,7 +59,7 @@ function Signup() {
                     <span className="px-3 text-gray-500 text-sm">OR</span>
                     <div className="flex-1 h-px bg-gray-300" />
                 </div>
-                <button className="w-full border p-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition">
+                <button onClick={signupWithGoogle} className="w-full border p-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition">
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5" />
                     Sign up with Google
                 </button>
