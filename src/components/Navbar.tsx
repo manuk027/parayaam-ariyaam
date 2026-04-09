@@ -19,6 +19,9 @@ function Navbar() {
                     <Link to="/add">
                         <span className="cursor-pointer hover:text-green-600 transition">Create</span>
                     </Link>
+                    <Link to="/myblogs">
+                        <span className="cursor-pointer hover:text-green-600 transition">MyBlogs</span>
+                    </Link>
                 </div>
                 {user ?
                     <div className="flex items-center gap-3">
