@@ -8,6 +8,7 @@ import CreateBlog from "./pages/CreateBlog";
 import Blogs from "./pages/Blogs";
 import SingleBlog from "./pages/SingleBlog";
 import MyBlog from "./pages/MyBlogs";
+import EditBlog from "./pages/EditBlog";
 
 function App() {
     return (
@@ -20,7 +21,7 @@ function App() {
                 <Route path="/blogs/:blogid" element={<ProtectedRoute><SingleBlog /></ProtectedRoute>} />
                 <Route path="/myblogs" element={<ProtectedRoute><MyBlog /></ProtectedRoute>} />
                 <Route path="/add" element={<ProtectedRoute><CreateBlog /></ProtectedRoute>} />
-                {/* <Route path="/edit/:id" element={<ProtectedRoute><BlogForm /></ProtectedRoute>} /> */}
+                <Route path="/edit/:id" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />
 
             </Routes >
         </>
