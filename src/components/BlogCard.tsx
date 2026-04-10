@@ -8,15 +8,14 @@ type Blog = {
   content: string;
   userId: string;
   createdAt: Timestamp;
-  editMode: boolean,
-  deleteMode: boolean,
 };
 
 type Props = {
   blog: Blog;
+  onDelete: (id: string) => void;
 };
 
-export default function BlogCard({ blog }: Props) {
+export default function BlogCard({ blog, onDelete }: Props) {
   const { user } = useAuth();
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
@@ -26,16 +25,19 @@ export default function BlogCard({ blog }: Props) {
         <p>{blog.createdAt?.toDate ? blog.createdAt.toDate().toLocaleDateString() : "Just now"}</p>
         <div className="flex gap-3 items-center">
           <Link to={`/blogs/${blog.id}`} className="text-blue-600 hover:underline">Read</Link>
-          {(blog.userId !== user?.uid) ?
-            <></>
-            :
+          {blog.userId === user?.uid && (
             <>
               <button className="text-yellow-600 hover:underline">Edit</button>
-              <button className="text-red-600 hover:underline">Delete</button>
+              <button
+                className="text-red-600 hover:underline"
+                onClick={() => onDelete?.(blog.id)}
+              >
+                Delete
+              </button>
             </>
-          }
+          )}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
