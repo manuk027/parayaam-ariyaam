@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import CreateBlog from "./pages/CreateBlog";
 import Blogs from "./pages/Blogs";
 import SingleBlog from "./pages/SingleBlog";
+import MyBlog from "./pages/MyBlogs";
 
 function App() {
     return (
@@ -17,7 +18,7 @@ function App() {
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
                 <Route path="/blogs/:blogid" element={<ProtectedRoute><SingleBlog /></ProtectedRoute>} />
-                <Route path="/myblogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
+                <Route path="/myblogs" element={<ProtectedRoute><MyBlog /></ProtectedRoute>} />
                 <Route path="/add" element={<ProtectedRoute><CreateBlog /></ProtectedRoute>} />
                 {/* <Route path="/edit/:id" element={<ProtectedRoute><BlogForm /></ProtectedRoute>} /> */}
 

@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import BlogCard from "../components/BlogCard";
 import { collection, getDocs, orderBy, query, Timestamp, } from "firebase/firestore";
 import { db } from "../firebase/config";
+import { useAuth } from "../context/AuthContext";
+import { where } from "firebase/firestore";
 
 export type Blog = {
     id: string;
@@ -11,22 +13,39 @@ export type Blog = {
     userId: string;
     email: string;
     createdAt: Timestamp;
-    editMode: boolean,
-    deleteMode: boolean,
+    editMode: boolean;
+    deleteMode: boolean;
 };
 
 
-function Blogs() {
+function MyBlog() {
+    const { user } = useAuth();
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     async function fetchBlogs(): Promise<void> {
         try {
-            const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
+            if (!user) return;
+            console.log(user.uid);
+            const q = query(
+                collection(db, "blogs"),
+                where("userId", "==", user.uid),
+                orderBy("createdAt", "desc")
+            );
             const snapshot = await getDocs(q);
             const data: Blog[] = snapshot.docs.map((doc) => {
                 const d = doc.data();
-                return { id: doc.id, title: d.title, content: d.content, userId: d.userId, createdAt: d.createdAt, email: d.email, editMode: false, deleteMode: false };
+                return {
+                    id: doc.id,
+                    title: d.title,
+                    content: d.content,
+                    userId: d.userId,
+                    createdAt: d.createdAt,
+                    email: d.email,
+                    editMode: true,
+                    deleteMode: true,
+                };
             });
+
             setBlogs(data);
         } catch (err) {
             console.error("Fetch error:", err);
@@ -34,9 +53,12 @@ function Blogs() {
             setLoading(false);
         }
     }
+
     useEffect(() => {
-        fetchBlogs();
-    }, []);
+        if (user) {
+            fetchBlogs();
+        }
+    }, [user]);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -61,4 +83,4 @@ function Blogs() {
     );
 }
 
-export default Blogs;
+export default MyBlog;
