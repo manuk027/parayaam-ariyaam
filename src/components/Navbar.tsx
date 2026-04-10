@@ -28,8 +28,8 @@ function Navbar() {
                         <span className="text-sm text-green-600 font-medium">{user.displayName}</span>
                     </div> :
                     <div className="flex items-center gap-3">
-                        <button className="text-sm text-green-600 font-medium hover:underline">Login</button>
-                        <button className="bg-green-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-green-700 transition">Sign Up</button>
+                        <button className="text-sm text-green-600 font-medium hover:underline"><Link to={"/login"}>Login</Link></button>
+                        <button className="bg-green-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-green-700 transition"><Link to={"/signup"}>Sign up</Link></button>
                     </div>
                 }
             </div>
