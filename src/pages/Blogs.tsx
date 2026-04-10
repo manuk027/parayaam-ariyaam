@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import BlogCard from "../components/BlogCard";
-import { collection, getDocs, orderBy, query, Timestamp, } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, Timestamp, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
+import { useAuth } from "../context/AuthContext";
 
 export type Blog = {
     id: string;
@@ -11,12 +12,11 @@ export type Blog = {
     userId: string;
     email: string;
     createdAt: Timestamp;
-    editMode: boolean,
-    deleteMode: boolean,
 };
 
 
 function Blogs() {
+    const { user } = useAuth();
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     async function fetchBlogs(): Promise<void> {
@@ -32,6 +32,18 @@ function Blogs() {
             console.error("Fetch error:", err);
         } finally {
             setLoading(false);
+        }
+    }
+    async function deleteBlog(id: string) {
+        try {
+            if (!user) return;
+
+            await deleteDoc(doc(db, "blogs", id));
+
+            setBlogs((prev) => prev.filter((blog) => blog.id !== id));
+            console.log("Deleted successfully");
+        } catch (error) {
+            console.error("DELETE ERROR:", error); // 👈 check this
         }
     }
     useEffect(() => {
@@ -53,7 +65,7 @@ function Blogs() {
                 <div className="space-y-4">
                     {!loading &&
                         blogs.map((blog) => (
-                            <BlogCard key={blog.id} blog={blog} />
+                            <BlogCard key={blog.id} blog={blog} onDelete={deleteBlog} />
                         ))}
                 </div>
             </div>
