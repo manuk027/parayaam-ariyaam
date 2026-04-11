@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import BlogEditor from "../components/BlogEditor";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateBlog() {
