@@ -38,17 +38,16 @@ function SingleBlog() {
         }
         fetchBlogById();
     }, [blogid]);
+
     if (!blog) {
         return <p className="p-6">Loading...</p>;
     }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
-
             <div className="max-w-3xl mx-auto px-6 py-10 mt-16">
-                <h1 className="text-4xl font-bold text-gray-900">
-                    {blog.title}
-                </h1>
+                <h1 className="text-4xl font-bold text-gray-900">{blog.title}</h1>
                 <div className="mt-4 text-sm text-gray-500 flex gap-4 items-center">
                     <span>{blog.email || "Unknown author"}</span>
                     <span>•</span>

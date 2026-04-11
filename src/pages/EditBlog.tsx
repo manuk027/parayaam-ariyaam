@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import BlogEditor from "../components/BlogEditor";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditBlog() {
@@ -17,32 +17,26 @@ export default function EditBlog() {
 
     useEffect(() => {
         if (!id || !user) return;
-
         async function fetchBlog() {
             try {
                 if (!id) return;
                 const ref = doc(db, "blogs", id);
                 const snap = await getDoc(ref);
-
                 if (!snap.exists()) {
                     navigate("/blogs");
                     return;
                 }
-
                 const data = snap.data();
-
                 if (data.userId !== user?.uid) {
                     navigate("/blogs");
                     return;
                 }
-
                 setTitle(data.title);
                 setContent(data.content);
             } catch (err) {
                 console.error("Fetch error:", err);
             }
         }
-
         fetchBlog();
     }, [id, user, navigate]);
 
@@ -51,20 +45,13 @@ export default function EditBlog() {
             alert("Title and content required");
             return;
         }
-
         if (!id) {
             alert("Invalid blog ID");
             return;
         }
-
         setLoading(true);
-
         try {
-            await updateDoc(doc(db, "blogs", id), {
-                title,
-                content,
-            });
-
+            await updateDoc(doc(db, "blogs", id), { title, content, });
             navigate("/blogs");
         } catch (err) {
             console.error("Update error:", err);
@@ -76,15 +63,7 @@ export default function EditBlog() {
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
-            <BlogEditor
-                title={title}
-                setTitle={setTitle}
-                content={content}
-                setContent={setContent}
-                onSubmit={handleUpdate}
-                loading={loading}
-                buttonText="Update"
-            />
+            <BlogEditor title={title} setTitle={setTitle} content={content} setContent={setContent} onSubmit={handleUpdate} loading={loading} buttonText="Update" />
         </div>
     );
 }

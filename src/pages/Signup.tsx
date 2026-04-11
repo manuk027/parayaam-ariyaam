@@ -67,10 +67,7 @@ function Signup() {
                     Already have an account?{" "}
                     <span
                         onClick={() => navigate("/login")}
-                        className="text-green-600 font-semibold cursor-pointer hover:underline"
-                    >
-                        Login
-                    </span>
+                        className="text-green-600 font-semibold cursor-pointer hover:underline">Login</span>
                 </p>
             </div>
         </div>
