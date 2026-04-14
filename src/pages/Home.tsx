@@ -1,29 +1,39 @@
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { collection, getCountFromServer } from "firebase/firestore";
+import { db } from "../firebase/config";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+
+  const [count, setCount] = useState<number>(0);
+  async function countBlogs() {
+    try {
+      const snapshot = await getCountFromServer(collection(db, "blogs"));
+      setCount(snapshot.data().count);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    countBlogs()
+  }, []);
+
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-green-100 selection:text-green-900 flex flex-col">
       <Navbar />
       <main className="flex-1 relative flex items-center justify-center pt-24 pb-12 overflow-hidden px-6">
-
-        {/* --- DOODLE LAYER: Story & Imagination --- */}
-
-        {/* 1. The Spark of an Idea (Top Left) */}
         <div className="absolute top-28 left-[5%] text-green-300/40 hidden xl:block -rotate-12 animate-pulse">
           <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
           </svg>
         </div>
-
-        {/* 2. Character Arc/Dialogue Loop (Mid Left, behind text) */}
         <div className="absolute top-1/2 left-[2%] -translate-y-1/2 text-green-100/60 hidden 2xl:block -z-10">
           <svg width="250" height="250" viewBox="0 0 200 200" fill="none">
             <path d="M30 30C80 0 160 60 140 100C120 140 40 130 60 170C80 210 170 170 170 170" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeDasharray="10 15" />
           </svg>
         </div>
-
-        {/* 3. The Quill/Drafting (Mid Right, near logo) */}
         <div className="absolute top-1/3 right-[5%] text-green-200/40 hidden lg:block rotate-12">
           <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -74,22 +84,13 @@ export default function Home() {
               </div>
               <div className="pt-10 flex items-center justify-center lg:justify-start gap-10">
                 <div className="relative group">
-                  <span className="block text-4xl font-black text-slate-950 tracking-tighter">500+</span>
+                  <span className="block text-4xl font-black text-slate-950 tracking-tighter">{count}</span>
                   <span className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Published Blogs</span>
                   <svg className="absolute -bottom-2 left-0 w-12 text-green-400/30" viewBox="0 0 50 10" fill="none">
                     <path d="M2 8C15 2 35 2 48 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                   </svg>
                 </div>
                 <div className="w-px h-10 bg-slate-100 rotate-12" />
-                <div className="relative">
-                  <span className="block text-4xl font-black text-slate-950 tracking-tighter">10k+</span>
-                  <span className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Monthly Readers</span>
-                  <div className="absolute -top-3 -right-6 text-green-400/40 rotate-12">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" />
-                    </svg>
-                  </div>
-                </div>
               </div>
             </div>
 
