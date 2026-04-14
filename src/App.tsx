@@ -9,6 +9,7 @@ import Blogs from "./pages/Blogs";
 import SingleBlog from "./pages/SingleBlog";
 import MyBlog from "./pages/MyBlogs";
 import EditBlog from "./pages/EditBlog";
+import NotFound from "./pages/NotFound";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/myblogs" element={<ProtectedRoute><MyBlog /></ProtectedRoute>} />
                 <Route path="/add" element={<ProtectedRoute><CreateBlog /></ProtectedRoute>} />
                 <Route path="/edit/:id" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />
+                <Route path="*" element={<NotFound />} />
 
             </Routes >
         </>
