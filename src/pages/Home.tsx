@@ -84,8 +84,8 @@ export default function Home() {
               </div>
               <div className="pt-10 flex items-center justify-center lg:justify-start gap-10">
                 <div className="relative group">
-                  <span className="block text-4xl font-black text-slate-950 tracking-tighter">{count}</span>
-                  <span className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Published Blogs</span>
+                  <span className="block text-6xl font-black text-slate-950 tracking-tighter">{count}</span>
+                  <span className="block text-l font-black text-green-700 uppercase tracking-[0.2em] mt-1">Published Blogs</span>
                   <svg className="absolute -bottom-2 left-0 w-12 text-green-400/30" viewBox="0 0 50 10" fill="none">
                     <path d="M2 8C15 2 35 2 48 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                   </svg>
