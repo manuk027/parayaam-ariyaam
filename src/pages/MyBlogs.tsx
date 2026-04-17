@@ -59,23 +59,39 @@ function MyBlog() {
     }, [user]);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-white">
             <Navbar />
-            <div className="max-w-4xl mx-auto px-6 py-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">Blogs</h1>
+            <main className="max-w-7xl mx-auto px-6 pt-24 pb-16 md:pt-32">
+                <header className="mb-12">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-1 h-1 rounded-full bg-emerald-500"></div>
+                        <span className="text-emerald-600 font-bold uppercase tracking-[0.2em] text-xs">Parayaam Ariyaam</span>
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                        My Stories<span className="text-emerald-500">.</span>
+                    </h1>
+                </header>
                 {loading && (
-                    <p className="text-gray-500">Loading blogs...</p>
+                    <div className="flex flex-col items-center justify-center py-20">
+                        <div className="w-10 h-10 border-4 border-emerald-50 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
+                        <p className="text-slate-400 font-medium tracking-wide">Fetching latest posts...</p>
+                    </div>
                 )}
                 {!loading && blogs.length === 0 && (
-                    <p className="text-gray-500">No blogs available.</p>
+                    <div className="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
+                        <p className="text-slate-400 text-lg">No stories have been published yet.</p>
+                        <button className="mt-4 text-emerald-600 font-semibold hover:text-emerald-700">
+                            Be the first to write one
+                        </button>
+                    </div>
                 )}
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     {!loading &&
                         blogs.map((blog) => (
                             <BlogCard key={blog.id} blog={blog} onDelete={deleteBlog} />
                         ))}
                 </div>
-            </div>
+            </main>
         </div>
     );
 }

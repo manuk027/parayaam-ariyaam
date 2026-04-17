@@ -50,27 +50,42 @@ function Blogs() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">All Blogs</h1>
+      <main className="max-w-7xl mx-auto px-6 pt-28 pb-20">
+
+        <header className="mb-12 md:mb-16">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="h-px w-8 bg-emerald-200"></span>
+            <span className="text-emerald-600 font-bold uppercase tracking-[0.2em] text-[10px]">Airyaam Parayaam</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+            All Stories<span className="text-emerald-500">.</span>
+          </h1>
+        </header>
         {loading && (
-          <p className="text-gray-500">Loading blogs...</p>
+          <div className="flex flex-col items-center justify-center py-24">
+            <div className="relative flex items-center justify-center">
+              <div className="w-12 h-12 border-4 border-emerald-50 rounded-full"></div>
+              <div className="absolute w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <p className="mt-4 text-emerald-600 font-medium animate-pulse">Refreshing the feed...</p>
+          </div>
         )}
         {!loading && blogs.length === 0 && (
-          <p className="text-gray-500">No blogs available.</p>
+          <div className="flex flex-col items-center justify-center py-24 px-6 rounded-[2rem] border-2 border-dashed border-emerald-50 bg-emerald-50/20">
+            <p className="text-slate-400 text-lg font-medium italic">The shelf is empty for now.</p>
+            <p className="text-slate-400 text-sm mt-1">Check back later or start a trend yourself.</p>
+          </div>
         )}
-        <div className="space-y-4">
-          {!loading &&
-            blogs.map((blog) => (
-              <BlogCard
-                key={blog.id}
-                blog={blog}
-                onDelete={deleteBlog}
-              />
+        {!loading && blogs.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {blogs.map((blog) => (
+              <BlogCard key={blog.id} blog={blog} onDelete={deleteBlog} />
             ))}
-        </div>
-      </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
