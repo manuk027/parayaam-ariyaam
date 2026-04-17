@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Timestamp, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { Calendar, User, ArrowLeft, Clock } from "lucide-react";
+import { Calendar, User, ArrowLeft } from "lucide-react";
 
 export type Blog = {
     id: string;
