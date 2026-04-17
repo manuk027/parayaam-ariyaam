@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { LogOut } from "lucide-react";
+import toast from "react-hot-toast";
 
 function Navbar() {
     const { user } = useAuth();
@@ -14,6 +15,7 @@ function Navbar() {
     async function handleLogout() {
         try {
             await signOut(auth);
+            toast.error("User have been signned out", {toasterId: "success"});
         } catch (error: any) {
             console.log(error.message);
         }

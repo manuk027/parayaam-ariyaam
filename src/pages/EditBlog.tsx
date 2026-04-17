@@ -5,6 +5,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function EditBlog() {
     const [title, setTitle] = useState<string>("");
@@ -52,6 +53,7 @@ export default function EditBlog() {
         setLoading(true);
         try {
             await updateDoc(doc(db, "blogs", id), { title, content, });
+            toast.success("Story edited", {toasterId: "submission"});
             navigate("/blogs");
         } catch (err) {
             console.error("Update error:", err);
