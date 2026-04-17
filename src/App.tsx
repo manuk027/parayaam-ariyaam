@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 import PublicRoute from "./routes/PublicRoute";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -14,6 +15,7 @@ import NotFound from "./pages/NotFound";
 function App() {
     return (
         <>
+            <Toaster position="top-center" reverseOrder={false} />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
