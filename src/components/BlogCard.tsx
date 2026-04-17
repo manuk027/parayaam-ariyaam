@@ -29,9 +29,11 @@ export default function BlogCard({ blog, onDelete }: Props) {
           <Link to={`/blogs/${blog.id}`} className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition">Read</Link>
           {blog.userId === user?.uid && (
             <>
-              <button className="px-3 py-1.5 text-sm font-medium text-yellow-700 bg-yellow-50 rounded-md hover:bg-yellow-100 transition">
-                <Link to={`/edit/${blog.id}`}>Edit</Link>
-              </button>
+              <Link to={`/edit/${blog.id}`}>
+                <button className="px-3 py-1.5 text-sm font-medium text-yellow-700 bg-yellow-50 rounded-md hover:bg-yellow-100 transition">
+                  Edit
+                </button>
+              </Link>
               <button onClick={() => onDelete(blog.id)} className="px-3 py-1.5 text-sm font-medium text-red-700 bg-red-50 rounded-md hover:bg-red-100 transition">Delete</button>
             </>
           )}
