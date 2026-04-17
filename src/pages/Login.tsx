@@ -8,6 +8,7 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
     async function loginWithEmail(e: React.FormEvent) {
         e.preventDefault();
         try {
@@ -16,6 +17,7 @@ function Login() {
             if (passwordError) toast.error(passwordError);
             if (emailError || passwordError) return;
             await signInWithEmailAndPassword(auth, email, password);
+            toast.success("Successfully loggedin", { toasterId: "success" });
             navigate("/blogs", { replace: true });
         } catch (error: any) {
             console.error(error.message);
@@ -27,6 +29,7 @@ function Login() {
         try {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
+            toast.success("Successfully loggedin", { toasterId: "success" });
             navigate("/blogs", { replace: true });
         } catch (error) {
             if (error instanceof Error) {
