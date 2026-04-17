@@ -15,7 +15,9 @@ import NotFound from "./pages/NotFound";
 function App() {
     return (
         <>
-            <Toaster position="top-center" reverseOrder={false} />
+            <Toaster position="top-center" reverseOrder={false} toasterId="auth" />
+            <Toaster position="top-right" reverseOrder={false} toasterId="success" />
+            <Toaster position="bottom-right" reverseOrder={false} toasterId="submission" />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />

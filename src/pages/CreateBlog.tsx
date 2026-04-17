@@ -5,6 +5,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function CreateBlog() {
   const [title, setTitle] = useState<string>("");
@@ -19,6 +20,7 @@ export default function CreateBlog() {
     setLoading(true);
     try {
       await addDoc(collection(db, "blogs"), { title, content, userId: user.uid, createdAt: serverTimestamp(), email: user.email });
+      toast.success("Story submitted", { toasterId: "submission" });
       navigate("/blogs");
     } catch (err) {
       console.error("Create error:", err);
