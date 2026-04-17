@@ -1,39 +1,50 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { LogOut } from "lucide-react";
 
 function Navbar() {
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-
     const toggleMenu = () => setIsOpen(!isOpen);
-
-    // Common link style to keep code DRY
     const navLinkStyle = "cursor-pointer hover:text-green-600 transition-colors duration-200";
+
+    async function handleLogout() {
+        try {
+            await signOut(auth);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 w-full max-w-5xl px-4 z-50">
-            {/* Main Navbar Pill */}
             <div className="flex items-center justify-between px-6 py-3 bg-white/70 backdrop-blur-lg border border-white/40 shadow-lg rounded-full transition-all duration-300 hover:shadow-xl">
-                
-                {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 shrink-0">
                     <img src="/logo.png" alt="logo" className="h-8" />
                 </Link>
-
-                {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-700 uppercase tracking-widest">
                     <Link to="/" className={navLinkStyle}>Home</Link>
                     <Link to="/blogs" className={navLinkStyle}>Blogs</Link>
                     <Link to="/add" className={navLinkStyle}>Create</Link>
                     <Link to="/myblogs" className={navLinkStyle}>My Blogs</Link>
                 </div>
-
-                {/* Auth Actions / Mobile Toggle */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center items-center gap-3">
                     {user ? (
-                        <div className="hidden md:block">
-                            <span className="text-sm text-green-600 font-bold">{user.displayName}</span>
+                        <div className="hidden md:flex items-center gap-3">
+                            <span className="text-sm font-semibold text-gray-700">
+                                {user.displayName}
+                            </span>
+
+                            <button
+                                onClick={handleLogout}
+                                className="p-2 rounded-full hover:bg-gray-200 transition"
+                                title="Logout"
+                            >
+                                <LogOut size={18} />
+                            </button>
                         </div>
                     ) : (
                         <div className="hidden md:flex items-center gap-3">
@@ -45,7 +56,7 @@ function Navbar() {
                     )}
 
                     {/* Mobile Menu Button */}
-                    <button 
+                    <button
                         onClick={toggleMenu}
                         className="md:hidden p-2 text-slate-700 hover:text-green-600 transition-colors"
                         aria-label="Toggle Menu"
@@ -69,9 +80,9 @@ function Navbar() {
                     <Link to="/blogs" onClick={toggleMenu} className="hover:text-green-600 py-2">Blogs</Link>
                     <Link to="/add" onClick={toggleMenu} className="hover:text-green-600 py-2">Create</Link>
                     <Link to="/myblogs" onClick={toggleMenu} className="hover:text-green-600 py-2">My Blogs</Link>
-                    
+
                     <hr className="border-slate-100 my-2" />
-                    
+
                     {user ? (
                         <span className="text-green-600 py-2">{user.displayName}</span>
                     ) : (
