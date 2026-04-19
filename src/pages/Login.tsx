@@ -3,24 +3,34 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
 import toast from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react";
 
 function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
+    const [showPassword, setShowPassword] = useState<boolean>(false);
     async function loginWithEmail(e: React.FormEvent) {
         e.preventDefault();
         try {
             const { emailError, passwordError } = validateLogin(email, password);
-            if (emailError) toast.error(emailError);
-            if (passwordError) toast.error(passwordError);
+            if (emailError) {
+                toast.error(emailError, { toasterId: 'auth' });
+            }
+            if (passwordError) toast.error(passwordError, { toasterId: 'auth' });
             if (emailError || passwordError) return;
             await signInWithEmailAndPassword(auth, email, password);
             toast.success("Successfully loggedin", { toasterId: "success" });
             navigate("/blogs", { replace: true });
         } catch (error: any) {
-            console.error(error.message);
+            toast.error(
+                error?.code === "auth/invalid-credential"
+                    ? "Invalid email or password"
+                    : error?.code === "auth/too-many-requests"
+                        ? "Too many attempts. Try again later."
+                        : "Login failed",
+                { toasterId: "auth" }
+            );
         }
     }
 
@@ -54,10 +64,17 @@ function Login() {
                     <img src="/logo.png" alt="App Logo" className="h-16" />
                 </div>
                 <h2 className="text-2xl font-bold text-center mb-6">Welcome Back</h2>
-                <form className="space-y-4">
-                    <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="Email" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required />
-                    <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder="Password" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required />
-                    <button onClick={loginWithEmail} type="submit" className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition">Login</button>
+                <form onSubmit={loginWithEmail} className="space-y-4">
+                    <input onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="Email" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+                    <div className="relative">
+                        <input onChange={(e) => setPassword(e.target.value)} type={showPassword ? "text" : "password"} name="password" placeholder="Password" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 pr-10" />
+                        <button type="button" onClick={() => setShowPassword(prev => !prev)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            {showPassword ? <EyeOff /> : <Eye />}
+                        </button>
+                    </div>
+                    <button type="submit" className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition">
+                        Login
+                    </button>
                 </form>
                 <div className="flex items-center my-6">
                     <div className="flex-1 h-px bg-gray-300" />
@@ -65,10 +82,14 @@ function Login() {
                     <div className="flex-1 h-px bg-gray-300" />
                 </div>
                 <button onClick={loginWithGoogle} className="w-full border p-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5" />Sign in with Google</button>
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5" />
+                    Sign in with Google
+                </button>
                 <p className="text-center text-sm text-gray-600 mt-6">
                     Don't have an account?{" "}
-                    <span onClick={() => navigate("/signup")} className="text-green-600 font-semibold cursor-pointer hover:underline">Signup</span>
+                    <span onClick={() => navigate("/signup")} className="text-green-600 font-semibold cursor-pointer hover:underline">
+                        Signup
+                    </span>
                 </p>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
 import toast from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react";
 
 function Signup() {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ function Signup() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     async function signupWithEmail(e: React.FormEvent) {
         e.preventDefault();
@@ -65,7 +67,12 @@ function Signup() {
                 <form onSubmit={signupWithEmail} className="space-y-4">
                     <input onChange={(e) => setFullName(e.target.value)} type="text" name="fullname" placeholder="Full Name" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
                     <input onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="Email" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
-                    <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder=" Password" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+                    <div className="relative">
+                        <input onChange={(e) => setPassword(e.target.value)} type={showPassword ? "text" : "password"} name="password" placeholder="Password" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 pr-10" />
+                        <button type="button" onClick={() => setShowPassword(prev => !prev)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            {showPassword ? <EyeOff /> : <Eye />}
+                        </button>
+                    </div>
                     <input onChange={(e) => setConfirmPassword(e.target.value)} type="password" name="password" placeholder="Confirm Password" className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
                     <button type="submit" className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition">Sign Up</button>
                 </form>
