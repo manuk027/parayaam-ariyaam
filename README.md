@@ -33,7 +33,7 @@ A modern, minimalist blog application designed for clutter-free reading and effo
 ### Backend (BaaS)
 - **[Firebase](https://firebase.google.com/)**: Comprehensive backend infrastructure handling:
   - **Firebase Auth**: User identity management.
-  - **Firestore Database**: NoSQL document storage handling "blogs" collections and fields.
+  - **Firestore Database**: NoSQL document storage handling "blogs and users" collections and fields.
 
 ---
 
@@ -66,7 +66,7 @@ src/
 
 ## 🔌 API & External Libraries reference
 
-Data orchestration within the app doesn't rely directly on traditional REST APIs but instead interfaces fluidly using **Google Firebase SDK's**:
+Data orchestration within the app doesn't rely directly on traditional REST APIs but instead interfaces fluidly using **Google Firebase SDKs **:
 - `firebase/app`: Used to initialize app contexts natively utilizing Environment Variables.
 - `firebase/auth`: Handles token management, authentication state observation, and login status.
 - `firebase/firestore`: Modifies data iteratively securely under the target collection `"blogs"`. Provides features like server-side timestamps and real-time listeners.
@@ -75,7 +75,7 @@ Data orchestration within the app doesn't rely directly on traditional REST APIs
 
 ## ⚙️ Environment Variables Setup
 
-Ensure you create a `.env` file in the root directory prior to running the project. It should look like this:
+Ensure you create a `.env` file in the root directory before running the project. It should look like this:
 
 ```env
 VITE_FIREBASE_API_KEY="your-api-key"
@@ -91,7 +91,7 @@ VITE_FIREBASE_MEASUREMENT_ID="your-measurement-id"
 
 Available script commands within `package.json`:
 - `npm run dev` - Initialise the Vite development environment server locally.
-- `npm run build` - Invoke the total Typescript Compilation strictly & bundle application build assets for dist.
+- `npm run build` - Invoke the total TypeScript compilation strictly & bundle application build assets for dist.
 - `npm run lint` - Trigger ESLint to enforce syntax consistency.
 - `npm run preview` - Render a local preview of the production bundle.
 
