@@ -59,7 +59,7 @@ src/
 │   ├── ProtectedRoute # Forces login re-directs
 │   └── PublicRoute    # Forces dashboard re-directs if already logged in
 ├── App.tsx          # Main entry route definer
-└── man.tsx         # React DOM renderer
+└── main.tsx         # React DOM renderer
 ```
 
 ---
