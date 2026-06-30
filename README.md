@@ -4,7 +4,7 @@
 
 A modern, minimalist blog application designed for clutter-free reading and effortless writing. Built entirely with React, TypeScript, Vite, and powered by Firebase, the platform is designed precisely to let authors share their stories effectively without being sidetracked by complex user interfaces.
 
-## 🚀 Features
+##  Features
 
 - **Robust User Authentication**: Secure Login and Registration powered by Firebase Authentication. Protected routes ensure that only authenticated users can create, modify, or view their blogs.
 - **Complete Blog Management**: Write engaging articles, edit existing drafts, and browse other writers' posts on a unified platform.
