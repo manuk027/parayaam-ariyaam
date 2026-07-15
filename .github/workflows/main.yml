@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
- DB_URL: ${{ secrets.DB_URL }}
+  DB_URL: ${{ secrets.DB_URL }}
 
 jobs:
   test:
@@ -15,4 +15,4 @@ jobs:
         run: echo "Hello, GitHub Actions!"
 
       - name: Testing env
-        run: echo ${DB_URL}
+        run: echo "$DB_URL"
