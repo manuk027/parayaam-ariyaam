@@ -15,4 +15,4 @@ jobs:
         run: echo "Hello, GitHub Actions!"
 
       - name: Testing env
-        run: echo ${DB}
+        run: echo ${DB_URL}
