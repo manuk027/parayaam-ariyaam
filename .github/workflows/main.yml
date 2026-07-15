@@ -3,6 +3,9 @@ name: sample
 on:
   workflow_dispatch:
 
+env:
+ DB_URL: ${{ secrets.DB_URL }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,3 +13,6 @@ jobs:
     steps:
       - name: Say Hello
         run: echo "Hello, GitHub Actions!"
+
+      - name: Testing env
+        run: echo ${DB}
